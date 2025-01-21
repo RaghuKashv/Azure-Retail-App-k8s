@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: userprofile-deployment
+  namespace: akv-test
 spec:
   replicas: 2
   selector:
@@ -12,19 +13,39 @@ spec:
       labels:
         app: userprofile
     spec:
+      initContainers:
+      - name: init-front-app
+        image: busybox:1.35.0-uclibc
+        command: ['sh', '-c', 'echo "Running initialization tasks for the front-end application"; sleep 10;']
       containers:
       - name: usernode-js
         image: saiteja2502/userprofileretail:latest
         ports:
-        - containerPort: 3130  # Change to match your app's port
+        - containerPort: 3130  # Match your app's port
         env:
         - name: MONGODB-URI
-          value: "mongodb://mongodb:27017/myDatabase"  # Match this to your MongoDB deployment
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-uri-secret
+              key: MongoDBUri
         - name: SESSION-SECRET
-          value: "1234"
+          valueFrom:
+            secretKeyRef:
+              name: session-secret
+              key: SESSION-SECRET
         - name: EMAIL-USER
-          value: "chagantyteja2502@gmail.com"
+          valueFrom:
+            secretKeyRef:
+              name: email-username-secret
+              key: EmailUsername
         - name: EMAIL-PASS
-          value: "yxoq bjuk rdnt alzp"
+          valueFrom:
+            secretKeyRef:
+              name: email-password-secret
+              key: EmailPassword
         - name: PORT
-          value: "3130"
+          valueFrom:
+            secretKeyRef:
+              name: port-secret
+              key: PORT
+
