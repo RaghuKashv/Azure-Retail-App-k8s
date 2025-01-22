@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.container.mongodb }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.container.mongodb }}
+spec:
+  replicas: {{ .Values.replicaCount.mongodb }}
+  selector:
+    matchLabels:
+      app: {{ .Values.container.mongodb }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.container.mongodb }}
+    spec:
+      containers:
+      - name: {{ .Values.container.mongodb }}
+        image: {{ .Values.image.mongodb.repository }}:{{ .Values.image.mongodb.tag }}
+        imagePullPolicy: {{ .Values.image.mongodb.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.port.mongodb }}
+        env:
+        - name: MONGO_INITDB_DATABASE
+          value: {{ .Values.environment.mongodb.database }}

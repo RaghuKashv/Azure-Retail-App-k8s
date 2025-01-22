@@ -1,0 +1,74 @@
+namespace: akv-test
+
+# Replica counts for MongoDB and UserProfile app
+replicaCount:
+  mongodb: 1
+  userprofile: 2
+
+# Image details for MongoDB and UserProfile app
+image:
+  mongodb:
+    repository: mongo
+    tag: latest
+    pullPolicy: IfNotPresent
+  userprofile:
+    repository: saiteja2502/userprofileretail
+    tag: latest
+    pullPolicy: IfNotPresent
+  initFrontApp:
+    repository: busybox
+    tag: 1.35.0-uclibc
+    pullPolicy: IfNotPresent
+
+# Container and environment variable names for MongoDB and UserProfile app
+container:
+  mongodb: mongodb
+  userprofile: usernode-js
+  initFrontApp: init-front-app
+
+# Ports for MongoDB and UserProfile app
+port:
+  mongodb: 27017
+  userprofile: 3130
+
+# Environment variables for MongoDB and UserProfile app
+environment:
+  mongodb:
+    database: myDatabase
+    mongodbUriEnvName: MONGODB-URI
+  userprofile:
+    mongodbUriSecret: mongodb-uri-secret
+    mongodbUriKey: MongoDBUri
+    mongodbUriEnvName: MONGODB-URI
+    sessionSecretName: session-secret
+    sessionSecretKey: SESSION-SECRET
+    sessionSecretEnvName: SESSION-SECRET
+    emailUsernameSecret: email-username-secret
+    emailUsernameKey: EmailUsername
+    emailUsernameEnvName: EMAIL-USER
+    emailPasswordSecret: email-password-secret
+    emailPasswordKey: EmailPassword
+    emailPasswordEnvName: EMAIL-PASS
+    portSecret: port-secret
+    portKey: PORT
+    portEnvName: PORT
+
+# KeyVault configuration
+keyVault:
+  name: clahan-key-vault-143
+  secrets:
+    - name: MongoDBUri
+      dataKey: MongoDBUri
+      k8sSecretName: mongodb-uri-secret
+    - name: SESSION-SECRET
+      dataKey: SESSION-SECRET
+      k8sSecretName: session-secret
+    - name: PORT
+      dataKey: PORT
+      k8sSecretName: port-secret
+    - name: EmailUsername
+      dataKey: EmailUsername
+      k8sSecretName: email-username-secret
+    - name: EmailPassword
+      dataKey: EmailPassword
+      k8sSecretName: email-password-secret
