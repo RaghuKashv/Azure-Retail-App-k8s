@@ -4,7 +4,7 @@ metadata:
   name: usernode-js-service
   namespace: {{ .Values.namespace }}
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
     - port: {{ .Values.port.userprofile }}
       targetPort: {{ .Values.port.userprofile }}
