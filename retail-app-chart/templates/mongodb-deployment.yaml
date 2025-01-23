@@ -16,11 +16,12 @@ spec:
         app: {{ .Values.container.mongodb }}
     spec:
       containers:
-      - name: {{ .Values.container.mongodb }}
-        image: {{ .Values.image.mongodb.repository }}:{{ .Values.image.mongodb.tag }}
-        imagePullPolicy: {{ .Values.image.mongodb.pullPolicy }}
-        ports:
-        - containerPort: {{ .Values.port.mongodb }}
-        env:
-        - name: MONGO_INITDB_DATABASE
-          value: {{ .Values.environment.mongodb.database }}
+        - name: {{ .Values.container.mongodb }}
+          image: {{ .Values.image.mongodb.repository }}:{{ .Values.image.mongodb.tag }}
+          imagePullPolicy: {{ .Values.image.mongodb.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.port.mongodb }}
+          env:
+            - name: MONGO_INITDB_DATABASE
+              value: {{ .Values.environment.mongodb.database }}
+

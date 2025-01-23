@@ -16,40 +16,40 @@ spec:
         app: {{ .Values.container.userprofile }}
     spec:
       initContainers:
-      - name: {{ .Values.container.initFrontApp }}
-        image: {{ .Values.image.initFrontApp.repository }}:{{ .Values.image.initFrontApp.tag }}
-        imagePullPolicy: {{ .Values.image.initFrontApp.pullPolicy }}
-        command: ['sh', '-c', 'echo "Running initialization tasks for the front-end application"; sleep 10;']
+        - name: {{ .Values.container.initFrontApp }}
+          image: {{ .Values.image.initFrontApp.repository }}:{{ .Values.image.initFrontApp.tag }}
+          imagePullPolicy: {{ .Values.image.initFrontApp.pullPolicy }}
+          command: ['sh', '-c', 'echo "Running initialization tasks for the front-end application"; sleep 10;']
       containers:
-      - name: {{ .Values.container.userprofile }}
-        image: {{ .Values.image.userprofile.repository }}:{{ .Values.image.userprofile.tag }}
-        imagePullPolicy: {{ .Values.image.userprofile.pullPolicy }}
-        ports:
-        - containerPort: {{ .Values.port.userprofile }}
-        env:
-        - name: {{ .Values.environment.userprofile.mongodbUriEnvName }}
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Values.environment.userprofile.mongodbUriSecret }}
-              key: {{ .Values.environment.userprofile.mongodbUriKey }}
-        - name: {{ .Values.environment.userprofile.sessionSecretEnvName }}
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Values.environment.userprofile.sessionSecretName }}
-              key: {{ .Values.environment.userprofile.sessionSecretKey }}
-        - name: {{ .Values.environment.userprofile.emailUsernameEnvName }}
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Values.environment.userprofile.emailUsernameSecret }}
-              key: {{ .Values.environment.userprofile.emailUsernameKey }}
-        - name: {{ .Values.environment.userprofile.emailPasswordEnvName }}
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Values.environment.userprofile.emailPasswordSecret }}
-              key: {{ .Values.environment.userprofile.emailPasswordKey }}
-        - name: {{ .Values.environment.userprofile.portEnvName }}
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Values.environment.userprofile.portSecret }}
-              key: {{ .Values.environment.userprofile.portKey }}
+        - name: {{ .Values.container.userprofile }}
+          image: {{ .Values.image.userprofile.repository }}:{{ .Values.image.userprofile.tag }}
+          imagePullPolicy: {{ .Values.image.userprofile.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.port.userprofile }}
+          env:
+            - name: {{ .Values.environment.userprofile.mongodbUriEnvName }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.environment.userprofile.mongodbUriSecret }}
+                  key: {{ .Values.environment.userprofile.mongodbUriKey }}
+            - name: {{ .Values.environment.userprofile.sessionSecretEnvName }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.environment.userprofile.sessionSecretName }}
+                  key: {{ .Values.environment.userprofile.sessionSecretKey }}
+            - name: {{ .Values.environment.userprofile.emailUsernameEnvName }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.environment.userprofile.emailUsernameSecret }}
+                  key: {{ .Values.environment.userprofile.emailUsernameKey }}
+            - name: {{ .Values.environment.userprofile.emailPasswordEnvName }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.environment.userprofile.emailPasswordSecret }}
+                  key: {{ .Values.environment.userprofile.emailPasswordKey }}
+            - name: {{ .Values.environment.userprofile.portEnvName }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.environment.userprofile.portSecret }}
+                  key: {{ .Values.environment.userprofile.portKey }}
 

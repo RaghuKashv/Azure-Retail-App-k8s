@@ -10,3 +10,4 @@ spec:
     - port: {{ .Values.port.mongodb }}
       targetPort: {{ .Values.port.mongodb }}
       protocol: TCP
+
